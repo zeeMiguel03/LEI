@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.container {
+   background-color: rgb(199, 208, 209);
+   width: 250px;
+   height: 250px;
+   border-radius: 15px;
+   padding: 20px;
+}
+
+.container select {
+   border-radius: 4px;
+   width: 250px;
+   height: 25px;
+}
+
+.container button {
+    border-radius: 4px;
+    width: 250px;
+    height: 25px;
+    background-color: rgb(77, 168, 77);
+    color: white;
+}
+
+.container input {
+    border-radius: 4px;
+    width: 240px;
+    height: 25px;
+}

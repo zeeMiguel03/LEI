@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    color: rgb(95, 78, 78);
+    padding: 0px 20px; 
+    font-size: 17px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    gap: 20px; 
+}
+
+nav a {
+    color: rgb(95, 78, 78);
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+}
+
+.leftcolumn {
+    vertical-align: middle; 
+    width: 35%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.rightcolumn {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+h1 {
+    color:rgb(62, 145, 218);
+    font-size:67px;
+}
+
+h3 {
+    font-size:25px;
+    color:rgb(143, 178, 207);
+}
+
+p {
+    color:rgb(42, 76, 104);
+    margin: 0;
+}
+
+ul {
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+li, ul {
+    list-style-type: none;
+    color:rgb(42, 76, 104);
+}
+
+.secondTitle {
+    margin-top: -55px;
+    font-size:34px;
+    color:rgb(143, 178, 207);
+}
+
+line {
+    width: 150px; 
+    height: 2px; 
+    background-color: #333; 
+    margin-left: 0;
+    margin-top: -20;
+}
+
+table {
+    align-self: flex-start;
+}
+
+th {
+    text-align: left;
+    color:#5e626b;
+    font-size: 15px;
+    padding: 8px;
+}
+
+th img {
+    width: 18px;
+    margin-right: 8px; 
+    vertical-align: middle; 
+}
+
+.containerUp {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.containerUp img {
+    border-radius: 50%;
+}
+
+.containerDown {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    height: 65%;
+    background-color: rgb(241, 242, 255);
+    width: 86%;
+    border-top-right-radius: 15%;
+    border-bottom-right-radius: 15%;
+}
+
+footer {
+    background-color: #5e626b;
+    padding: 0px 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+footer p {
+    color: rgb(245, 245, 245);
+    font-size: 17px; 
+}
+
