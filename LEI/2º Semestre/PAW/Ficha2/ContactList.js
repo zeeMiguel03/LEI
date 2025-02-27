@@ -1,6 +1,6 @@
 class Contact {
     constructor(name, number, email = "", age = null, nickname = "") {
-        if (name[0] !== name[0].toUpperCase()) {
+        if (!name[0].match(/[A-Z]/)) {
             throw new Error("Upper Case Exception");
         }
 
@@ -8,103 +8,65 @@ class Contact {
             throw new Error("Number Exception");
         }
 
-        this.name = name;
-        this.number = number;
-        this.email = email;
-        this.age = age;
-        this.nickname = nickname;
+        Object.assign(this, { name, number, email, age, nickname });
     }
 }
 
 const contacts = [];
 
-function addContact(contact) {
-    contacts[contacts.length] = contact;
-}
+const addContact = (contact) => contacts.push(contact);
 
-function findIndex(array, number) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i].number === number) {
-            return i;
-        } 
-    }
+const removeContact = (number) => {
+    const index = contacts.findIndex(contact => contact.number === number);
 
-    return -1;
-}
-
-function removeContact(number) {
-    let index = findIndex(contacts, number);
-
-    if (index == -1) {
+    if (index === -1) {
         throw new Error("Contact not found!");
     }
+        
+    contacts.splice(index, 1);
+};
 
-    for (let i = index; i < contacts.length - 1; i++) {
-        contacts[i] = contacts[i + 1];
-    }
-
-    contacts.length--;
-}
-
-function updateContact(number, newData) {
-    let index = findIndex(contacts, number);
+const updateContact = (number, newData) => {
+    const index = contacts.findIndex(contact => contact.number === number);
 
     if (index === -1) {
         throw new Error("Contact not found!");
     }
 
-    if (newData.name !== undefined) {
-        if (newData.name[0] !== newData.name[0].toUpperCase()) {
-          throw new Error("UpperCase Exception");
-        }
-
-        contacts[index].name = newData.name;
+    if (newData.name && !newData.name[0].match(/[A-Z]/)) {
+        throw new Error("Upper Case Exception");
     }
-      
-    if (newData.number !== undefined) {
-        if (number.length !== 9) {
-          throw new Error("Number Exception");
-        }
-
-        contacts[index].number = newData.number;
+    if (newData.number && newData.number.length !== 9) {
+        throw new Error("Number Exception");
     }
 
-    if (newData.email !== undefined) {
-        contacts[index].email = newData.email;
-    }
+    Object.assign(contacts[index], newData);
+};
 
-    if (newData.age !== undefined) {
-        contacts[index].age = newData.age;
-    }
-
-    if (newData.nickname !== undefined) {
-        contacts[index].nickname = newData.nickname;
-    }
-}
-
-function showAfterAge(age) {
-    const result = [];
-
-    for (let i = 0; i < contacts.length; i++) {
-        if (contacts[i].age >= age) {
-            result[result.length] = contacts[i];
-        }
-    }
-
-    return result;
-}
+const showAfterAge = (age) => contacts.filter(contact => contact.age >= age);
 
 try {
-    const contact1 = new Contact("João", "912345678", "joao@example.com", 25, "Joca");
-    const contact2 = new Contact("Maria", "987654321", "maria@example.com", 30);
-
-    addContact(contact1);
-    addContact(contact2);
-
-    updateContact("912345678", { email: "joao.novo@example.com" });
+    try {
+        const contact1 = new Contact("joão", "912345678", "joao@example.com", 25, "Joca");
+        addContact(contact1);
+    } catch (error) {
+        console.error("Erro ao adicionar contact1:", error.message);
+    }
+    
+    try {
+        const contact2 = new Contact("Maria", "987654321", "maria@example.com", 30, "Pedro");
+        addContact(contact2);
+    } catch (error) {
+        console.error("Erro ao adicionar contact2:", error.message);
+    }
+    
+    try {
+        updateContact("912345678", { email: "joao.novo@example.com" });
+    } catch (error) {
+        console.error("Erro ao atualizar contato:", error.message);
+    }
 
     console.log(showAfterAge(30));
-    
 } catch (error) {
     console.error(error.message);
 }
