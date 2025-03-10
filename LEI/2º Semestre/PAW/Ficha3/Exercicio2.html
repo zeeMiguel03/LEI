@@ -11,53 +11,75 @@
     <div class="container">
         <div class="header">My To Do List</div>
         <div class="input-group my-2">
-            <input type="text" id="taskInput" class="form-control" placeholder="Title...">
-            <button class="btn btn-danger" onclick="addTask()">Add</button>
+            <input type="text" id="taskInput" class="form-control" placeholder="Title..." required>
+            <button class="btn btn-danger" onclick="addTaskButton()">Add</button>
         </div>
 
         <ul id="taskList" class="list-group"></ul>
     </div>
 
     <script>
-        function addTask() {
-            let taskInput = document.getElementById("taskInput");
+        function addTaskButton() {
+            
+            let textInput = document.getElementById("taskInput");
+          let v = textInput.value;  
+            addTask(textInput)
+            saveTask(v);
 
-            let task = taskInput.value.trim();
+           
+        }
 
-            if (task === "") {
+        function addTask(textInput) {
+            let taskList = document.getElementById("taskList");
+            let newTask = document.createElement("li");
+            let newDiv = document.createElement("div");
+
+            newDiv.classList.add("d-flex", "justify-content-between", "align-items-center", "text-break");
+
+            newTask.setAttribute("class","list-group-item");
+
+            let node = document.createTextNode(textInput.value);
+
+            if (textInput.value.trim() === "") {
+                alert("You must write something");
                 return;
             }
 
-            let taskList = document.getElementById("taskList");
-            let li = createTaskItem(task);
-            let deleteButton = createDeleteButton(li);
-            li.appendChild(deleteButton);
-            taskList.appendChild(li);
-            taskInput.value = "";
+            let newButton = document.createElement("button");
+            newButton.setAttribute("class", "btn btn-danger");
+            newButton.innerText = "X";
+            
+            newButton.addEventListener("click", () => {
+                 removeTask(newTask);
+            });
+            
+            newDiv.appendChild(node);
+            newDiv.appendChild(newButton);
+            newTask.appendChild(newDiv);
+            taskList.appendChild(newTask);
+
+            textInput.value = "";
         }
 
-        function createTaskItem(task) {
-            let li = document.createElement("li");
-            li.className = "list-group-item d-flex justify-content-between align-items-center";
-            li.textContent = task;
-            return li;
+        function removeTask(task) {
+            task.parentElement.removeChild(task);
         }
 
-        function createDeleteButton(li) {
-            let deleteButton = document.createElement("button");
-            deleteButton.textContent = "X";
-            deleteButton.className = "btn btn-danger btn-sm";
-            deleteButton.onclick = function() {
-                deleteTask(li);
-            };
-            return deleteButton;
+        function saveTask(task) {
+            let list = JSON.parse(localStorage.getItem("taskList")) || [];
+            list.push(task);
+            localStorage.setItem("taskList", JSON.stringify(list));
         }
 
-        function deleteTask(taskItem) {
-            let taskList = document.getElementById("taskList");
-            taskList.removeChild(taskItem);
+        function loadTasks() {
+            let list = JSON.parse(localStorage.getItem("taskList")) || [];
+
+             
+                list.forEach(task => addTask(task));
+            
         }
-        
+    
+        loadTasks();
     </script>
 </body>
 </html>
