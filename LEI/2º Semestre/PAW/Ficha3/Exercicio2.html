@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">My To Do List</div>
+        <div class="header" id="headerTitle">My To Do List</div>
         <div class="input-group my-2">
             <input type="text" id="taskInput" class="form-control" placeholder="Title..." required>
             <button class="btn btn-danger" onclick="addTaskButton()">Add</button>
@@ -18,32 +18,59 @@
         <ul id="taskList" class="list-group"></ul>
     </div>
 
-    <script>
-        function addTaskButton() {
-            
-            let textInput = document.getElementById("taskInput");
-          let v = textInput.value;  
-            addTask(textInput)
-            saveTask(v);
+    <div class="container mt-3" id="usernameContainer">
+        <form id="usernameForm">
+          <div class="mb-3">
+            <label for="usernameInput" class="form-label">Write your name</label>
+            <input type="text" id="usernameInput" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
 
-           
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let userName = getCookie("username");
+            if (userName) {
+                changeHeaderName(userName);
+                document.getElementById("usernameContainer").style.display = "none";
+            }
+            
+            loadTasks();
+        });
+
+        document.getElementById("usernameForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let userName = document.getElementById("usernameInput").value.trim();
+            if (userName) {
+                setCookie("username", userName, 365);
+                changeHeaderName(userName);
+                document.getElementById("usernameContainer").style.display = "none";
+            }
+        });
+
+        function addTaskButton() {
+            let textInput = document.getElementById("taskInput");
+            let taskText = textInput.value;  
+
+            if (taskText.trim() === "") {
+                alert("You must write something");
+                return;
+            }
+
+            addTask(taskText);
+            saveTask(taskText);
+            textInput.value = "";
         }
 
-        function addTask(textInput) {
+        function addTask(taskText) {
             let taskList = document.getElementById("taskList");
             let newTask = document.createElement("li");
             let newDiv = document.createElement("div");
 
             newDiv.classList.add("d-flex", "justify-content-between", "align-items-center", "text-break");
-
             newTask.setAttribute("class","list-group-item");
-
-            let node = document.createTextNode(textInput.value);
-
-            if (textInput.value.trim() === "") {
-                alert("You must write something");
-                return;
-            }
+            let node = document.createTextNode(taskText);
 
             let newButton = document.createElement("button");
             newButton.setAttribute("class", "btn btn-danger");
@@ -57,12 +84,19 @@
             newDiv.appendChild(newButton);
             newTask.appendChild(newDiv);
             taskList.appendChild(newTask);
-
-            textInput.value = "";
         }
 
-        function removeTask(task) {
-            task.parentElement.removeChild(task);
+        function removeTask(taskElement) {
+            const taskText = taskElement.querySelector("div").firstChild.textContent;
+            taskElement.parentElement.removeChild(taskElement);
+            let tasks = JSON.parse(localStorage.getItem("taskList")) || [];
+            const index = tasks.indexOf(taskText);
+
+            if (index > -1) {
+                tasks.splice(index, 1);
+            }
+
+            localStorage.setItem("taskList", JSON.stringify(tasks));
         }
 
         function saveTask(task) {
@@ -73,13 +107,36 @@
 
         function loadTasks() {
             let list = JSON.parse(localStorage.getItem("taskList")) || [];
-
-             
-                list.forEach(task => addTask(task));
-            
+            list.forEach(taskText => addTask(taskText));
         }
-    
-        loadTasks();
+
+        function setCookie(cName, cValue, exDays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exDays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cName + "=" + cValue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cName) {
+            let name = cName + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function changeHeaderName(userName) {
+            let newName = document.getElementById("headerTitle");
+            newName.textContent = newName.textContent.replace("My", userName);
+        }
     </script>
 </body>
 </html>
