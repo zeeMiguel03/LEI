@@ -1,6 +1,6 @@
 document.getElementById("submit").addEventListener("click", () => {
     const data = {
-        nome: document.getElementById("name").value,
+        name: document.getElementById("name").value,
         age: document.getElementById("age").value,
         postal: document.getElementById("postal").value,
         taste: document.getElementById("taste").value,

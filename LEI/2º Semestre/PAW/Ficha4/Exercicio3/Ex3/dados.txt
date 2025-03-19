@@ -1,0 +1,6 @@
+Name: undefined, Age: 2, Postal: 3, Taste: 
+                 Time: , Ambience: undefined
+Name: undefined, Age: adawd, Postal: 2aea, Taste: dadawdawdawd
+                 Time: awdawdawd, Ambience: undefined
+Name: 1, Age: 1, Postal: 1, Taste: 1
+                 Time: 1, Ambience: 1

@@ -16,14 +16,8 @@ app.get("/", (req, res) => {
 app.post("/send", (req, res) => {
     console.log("Received data:", req.body); 
 
-    const { name, age, postal, taste, time, ambience } = req.body;
-
-    if (!name || !age) {
-        return res.status(400).send("Missing required fields");
-    }
-
     const data = `Name: ${name}, Age: ${age}, Postal: ${postal}, Taste: ${taste}
-                 Time: ${time}, Ambience: ${ambience}\n`;
+                 Time: ${time}, Ambience: ${ambiance}\n`;
 
     fs.appendFile("dados.txt", data, (err) => {
         if (err) {
