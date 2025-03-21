@@ -1,0 +1,5 @@
+{"latitude":"1","longitude":"2"}
+{"latitude":"1","longitude":"2"}
+{"latitude":"1","longitude":""}
+{"latitude":"2","longitude":"3"}
+{"latitude":"1","longitude":"2"}{"latitude":"2","longitude":"4"}
