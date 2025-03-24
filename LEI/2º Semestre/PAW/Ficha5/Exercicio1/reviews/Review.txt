@@ -1,0 +1,3 @@
+[{"name":"Mark","email":"Mark","book":"Mark","description":"Mark","inlineRadioOptions":"read"},
+{"name":"teste2","email":"teste2","book":"teste2","description":"teste2","inlineRadioOptions":"read"},
+{"name":"Mark","email":"Mark","book":"Mark","description":"Mark","inlineRadioOptions":"read"}]
