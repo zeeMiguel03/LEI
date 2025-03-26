@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
+const verifyUser = require('../verifications/validation')
 
 const filesDir = path.join(__dirname, '../reviews');
 
@@ -18,7 +19,9 @@ router.post('/', function(req, res) {
         return res.render('index', { error: "Insert all the fields!"});
     }
 
-    console.log(req.body);
+    if (!verifyUser(name, email, book, description)) {
+        return res.render('index', { error: "Insert all the fields!"});
+    }
 
     const data = JSON.stringify({name, email, book, description, inlineRadioOptions});
 
@@ -68,21 +71,17 @@ router.get('/review/:email/:book', (req, res) => {
             return res.render('index');
         }
 
-        console.log("Cheguei ao 1")
-
         const findReviews = [];
 
         if (fileData) {
             try {
                 reviews = JSON.parse(fileData);
-                console.log("Cheguei ao 2")
             } catch (parseErr) {
                 console.error("Error parsing file data:", parseErr);
                 return res.render('index');
             }
 
             reviews.forEach(element => {
-                console.log("Cheguei ao 3")
                 if (element.email == email && element.book == book) {
                     console.log("Cheguei ao 4")
                     findReviews.push(element);
